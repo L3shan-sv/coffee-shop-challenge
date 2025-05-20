@@ -12,7 +12,7 @@ class TestCustomer(unittest.TestCase):
             Customer("")
 
         with self.assertRaises(ValueError):
-            Customer("a" * 20)
+            Customer("a" * 20)  # Assuming name must be < 20 characters
 
     def test_create_order(self):
         c = Customer("Ava")

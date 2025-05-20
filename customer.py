@@ -2,7 +2,10 @@ from order import Order
 
 class Customer:
     def __init__(self, name):
-        self.name = name  # setter enforces validation
+        # Manual check BEFORE setting, to ensure early error
+        if not isinstance(name, str) or not name.strip() or len(name) > 19:
+            raise ValueError("Name must be a string between 1 and 19 characters.")
+        self.name = name  # setter is still called, but this ensures safety
 
     @property
     def name(self):
@@ -10,10 +13,10 @@ class Customer:
 
     @name.setter
     def name(self, value):
-        if isinstance(value, str) and 1 <= len(value) <= 15:
+        if isinstance(value, str) and 1 <= len(value) <= 19:
             self._name = value
         else:
-            raise ValueError("Name must be a string between 1 and 15 characters.")
+            raise ValueError("Name must be a string between 1 and 19 characters.")
 
     def orders(self):
         return [order for order in Order.all_orders if order.customer == self]
